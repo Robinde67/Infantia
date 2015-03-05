@@ -113,7 +113,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 3
+  m_RootOrder: 2
 --- !u!1 &231739822
 GameObject:
   m_ObjectHideFlags: 0
@@ -247,7 +247,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 6
+  m_RootOrder: 7
 --- !u!1 &325599642
 GameObject:
   m_ObjectHideFlags: 0
@@ -1524,6 +1524,13 @@ MonoBehaviour:
   size: 1
   Grid_Container: {fileID: 126352759}
   Background: {fileID: 165022, guid: f510810d6b322a44da3eb3a1df488eb5, type: 2}
+  spawn_frequency: 5
+  frequency_critters: 2
+  frequency_predators: 1
+  frequency_edible: 8
+  frequency_impassable: 8
+  frequency_passable: 8
+  frequency_water: 6
 --- !u!4 &1980890190
 Transform:
   m_ObjectHideFlags: 0
@@ -1566,6 +1573,9 @@ MonoBehaviour:
   m_xPos: {x: 0, y: 0}
   m_xGoal: {x: 5, y: 10}
   m_xNext: {x: 0, y: 0}
+  m_iSight: 0
+  m_iSpeed: 0
+  m_iCurrent: 0
   m_xaClosedList: []
   m_xaOpenList: []
   m_xGrid: {fileID: 1980890189}
@@ -1580,7 +1590,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 5
+  m_RootOrder: 6
 --- !u!1 &2076903558
 GameObject:
   m_ObjectHideFlags: 0
@@ -1678,7 +1688,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 423670, guid: 832c72e597be92440ad6c9a8a6676bfd, type: 2}
       propertyPath: m_RootOrder
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 832c72e597be92440ad6c9a8a6676bfd, type: 2}
