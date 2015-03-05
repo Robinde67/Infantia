@@ -35,7 +35,7 @@ public class Grid_Space : MonoBehaviour {
 					GameObject bg = Instantiate(Background, new Vector3(i * size, j * size), Background.transform.rotation) as GameObject;
 					bg.transform.localScale = bg.transform.localScale * 0.1f;
 
-					if(Random.Range(0, 5) == 0)
+					if(Random.Range(0, 0) == 0)
 					{
 						GameObject go = Instantiate(Objects[Random.Range (0, Objects.Count)], new Vector3(i * size, j * size), transform.rotation) as GameObject;
 						go.transform.parent = Grid_Container.transform;
@@ -48,10 +48,5 @@ public class Grid_Space : MonoBehaviour {
 				}
 			}
 		}
-	}
-	
-	// Update is called once per frame
-	void Update () {
-	
 	}
 }
