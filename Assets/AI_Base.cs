@@ -9,6 +9,8 @@ public class AI_Base : MonoBehaviour {
 	m_xGoal,
 	m_xNext;
 	
+	public List<Vector2> m_xaPath;
+	
 	public int
 	m_iSight,
 	m_iSpeed,
@@ -28,7 +30,7 @@ public class AI_Base : MonoBehaviour {
 	void Update () {
 		clear ();
 	
-		sense(m_xGrid.test[(int)m_xPos.x][(int)m_xPos.y]);
+		sense(m_xGrid.test[(int)m_xPos.x][(int)m_xPos.y], 0);
 		decide ();
 		act ();
 		
@@ -51,10 +53,8 @@ public class AI_Base : MonoBehaviour {
 		this.transform.position = m_xGrid.test[(int)m_xPos.x][(int)m_xPos.y].transform.position;
 	}
 	
-	void sense (GameObject p_xGobj) {
-		if (m_xaOpenList.Contains(p_xGobj)) {
-			m_xaOpenList.Remove(p_xGobj);
-		}
+	void sense (GameObject p_xGobj, int p_G) {		
+		m_xaOpenList.Clear();
 		
 		if (!m_xaClosedList.Contains(p_xGobj)) {
 			m_xaClosedList.Add(p_xGobj);
@@ -82,9 +82,42 @@ public class AI_Base : MonoBehaviour {
 		
 		for (int i = -1; i < 2; i++){
 			for (int ii = -1; ii < 2; ii++){
-				if (!m_xaClosedList.Contains(m_xGrid.test[x + i][y + ii])) {
-					m_xaOpenList.Add(m_xGrid.test[x + i][y + ii]);
+				if (!(i + x > m_xGrid.x || i + x < 0)){
+					if (!(ii + y > m_xGrid.y || ii + y < 0)){
+						if (!m_xaClosedList.Contains(m_xGrid.test[x + i][y + ii])) {
+							m_xaOpenList.Add(m_xGrid.test[x + i][y + ii]);
+						}
+					}
 				}
+			}
+		}
+		
+		if (m_xaOpenList.Count > 0){
+			int 
+			_iF = int.MaxValue,
+			_iIx = 0,
+			_iIy = 0;
+			
+			for (int i = 0; i < m_xGrid.x; i++){
+				for (int ii = 0; ii < m_xGrid.y; ii++){
+					if (m_xaOpenList.Contains(m_xGrid.test[i][ii])){
+						int _iFf = get_F(10, i, ii);
+						
+						if (_iFf < _iF){
+							_iF = _iFf;
+							
+							_iIx = i;
+							_iIy = ii;
+						}
+					}
+				}
+			}
+			
+			if ((_iIx == (int)m_xGoal.x && _iIy == (int)m_xGoal.y) || (p_G >= m_iSight)){
+				
+			}
+			else {
+				sense (m_xGrid.test[_iIx][_iIy], p_G + 1);
 			}
 		}
 	}
@@ -102,6 +135,22 @@ public class AI_Base : MonoBehaviour {
 		m_xaOpenList.Clear();
 		
 		m_xNext = m_xPos;
+	}
+	
+	int get_F(int G, int Hx, int Hy){
+		Vector2 _xV;
+		_xV.x = (m_xGoal.x - Hx);
+		_xV.y = (m_xGoal.y - Hy);
+		
+		if (_xV.x < 0){
+			_xV.x *= (-1);
+		}
+		
+		if (_xV.y < 0){
+			_xV.y *= (-1);
+		}
+		
+		return (int)(_xV.x + _xV.y);
 	}
 	
 	void move (Vector2 p_fVelocity) {
