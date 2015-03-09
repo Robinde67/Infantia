@@ -77,7 +77,7 @@ public class Grid_Space : MonoBehaviour {
 				GameObject bg = Instantiate(Background, new Vector3(i * size, j * size), Background.transform.rotation) as GameObject;
 				bg.transform.localScale = bg.transform.localScale * 0.1f;
 
-				if(Random.Range(0, 5) == 0)
+				if(Random.Range(0, 0) == 0)
 				{
                     GameObject cur_prefab = Edible[0];
                     int p = frequency_critters + frequency_edible + frequency_impassable + frequency_passable + frequency_predators + frequency_water;
@@ -121,12 +121,11 @@ public class Grid_Space : MonoBehaviour {
                         found = true;
                     }
 
-                    if(found)
-                    {
+                    //if(found){
 						GameObject go = Instantiate(cur_prefab, new Vector3(i * size, j * size), transform.rotation) as GameObject;
 						go.transform.parent = Grid_Container.transform;
 						test[i].Add(go);
-                    }
+                    //}
 				}
 			}
 		}
