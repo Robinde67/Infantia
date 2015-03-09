@@ -39,14 +39,6 @@ public class Path {
 		
 		return (int)(_xV.x + _xV.y);
 	}
-	
-	public bool compare(Path p_xPath) {
-		if (m_iX == p_xPath.m_iX && m_iY == p_xPath.m_iY) {
-			return true;
-		}
-		
-		return false;
-	}
 };
 
 public class AI_Base : MonoBehaviour {
@@ -72,9 +64,8 @@ public class AI_Base : MonoBehaviour {
 	void Start () {
 		m_iCurrent = m_iSpeed;
 	}
-	
-	// Update is called once per frame
-	void Update () {
+
+	void FixedUpdate () {
 		clear ();
 		
 		//sense(m_xGrid.test[(int)m_xPos.x][(int)m_xPos.y], 0);
