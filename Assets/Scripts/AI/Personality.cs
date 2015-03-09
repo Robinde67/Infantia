@@ -3,7 +3,7 @@ using System.Collections;
 
 public class Personality : MonoBehaviour {
 
-    public short variaty = 10;
+    public short variety = 10;
 
 	public short proactive;
 	public short social;
@@ -12,10 +12,10 @@ public class Personality : MonoBehaviour {
 	// Use this for initialization
 	void Start ()
     {
-        variaty = (short)Mathf.Abs(variaty);
-        proactive = (short)Random.Range(-variaty, variaty);
-        social = (short)Random.Range(-variaty, variaty);
-        intelligence = (short)Random.Range(-variaty, variaty);
+        variety = (short)Mathf.Abs(variety);
+        proactive = (short)Random.Range(-variety, variety);
+        social = (short)Random.Range(-variety, variety);
+        intelligence = (short)Random.Range(-variety, variety);
 	}
 	
 

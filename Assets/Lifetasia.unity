@@ -841,6 +841,9 @@ GameObject:
   - 212: {fileID: 1159669294}
   - 114: {fileID: 1159669297}
   - 114: {fileID: 1159669296}
+  - 50: {fileID: 1159669298}
+  - 114: {fileID: 1159669299}
+  - 58: {fileID: 1159669300}
   m_Layer: 0
   m_Name: Infant
   m_TagString: Untagged
@@ -918,6 +921,45 @@ MonoBehaviour:
   sleepy: 0
   boredom: 0
   person: {fileID: 1159669296}
+--- !u!50 &1159669298
+Rigidbody2D:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1159669293}
+  m_Mass: 1
+  m_LinearDrag: 0
+  m_AngularDrag: .0500000007
+  m_GravityScale: 0
+  m_FixedAngle: 0
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+--- !u!114 &1159669299
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1159669293}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8bce8396e1f8aed4d8b3f9bea34366c0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!58 &1159669300
+CircleCollider2D:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1159669293}
+  m_Enabled: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_Offset: {x: 0, y: 0}
+  serializedVersion: 2
+  m_Radius: .6875
 --- !u!1 &1168779285
 GameObject:
   m_ObjectHideFlags: 0
@@ -1573,6 +1615,7 @@ MonoBehaviour:
   m_xPos: {x: 0, y: 0}
   m_xGoal: {x: 5, y: 10}
   m_xNext: {x: 0, y: 0}
+  m_xaPath: []
   m_iSight: 0
   m_iSpeed: 0
   m_iCurrent: 0

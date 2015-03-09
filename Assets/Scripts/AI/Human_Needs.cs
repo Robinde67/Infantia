@@ -26,19 +26,19 @@ public class Human_Needs : MonoBehaviour {
 
     void Drain()
     {
-        float real_drain = (Time.fixedDeltaTime * drain) + (Time.fixedDeltaTime * ((float)person.proactive / (float)person.variaty));
+        float real_drain = (Time.fixedDeltaTime * drain) + (Time.fixedDeltaTime * ((float)person.proactive / (float)person.variety));
         if (real_drain <= 0)
         {
             real_drain = 0.1f * Time.fixedDeltaTime;
         }
         hunger -= real_drain;
-        real_drain = (Time.fixedDeltaTime * drain) + (Time.fixedDeltaTime * ((float)person.social / (float)person.variaty));
+        real_drain = (Time.fixedDeltaTime * drain) + (Time.fixedDeltaTime * ((float)person.social / (float)person.variety));
         if (real_drain <= 0)
         {
             real_drain = 0.1f * Time.fixedDeltaTime;;
         }
         boredom -= real_drain;
-        real_drain = (Time.fixedDeltaTime * drain) + (Time.fixedDeltaTime * ((float)-person.proactive / (float)person.variaty));
+        real_drain = (Time.fixedDeltaTime * drain) + (Time.fixedDeltaTime * ((float)-person.proactive / (float)person.variety));
         if (real_drain <= 0)
         {
             real_drain = 0.1f * Time.fixedDeltaTime;;
