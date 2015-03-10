@@ -121,12 +121,12 @@ public class Grid_Space : MonoBehaviour {
                         found = true;
                     }
 
-                    if(found)
-					{
+                   // if(found)
+					//{
 						GameObject go = Instantiate(cur_prefab, new Vector3(i * size, j * size), transform.rotation) as GameObject;
 						go.transform.parent = Grid_Container.transform;
 						test[i].Add(go);
-                    }
+                    //}
 				}
 				else
 				{
@@ -136,5 +136,53 @@ public class Grid_Space : MonoBehaviour {
 				}
 			}
 		}
+	}
+	
+	public int is_in_critters(int p_iG, GameObject p_xGobj){
+		if (Critters.Contains(p_xGobj)){
+			return p_iG;
+		}
+		
+		return 0;
+	}
+	
+	public int is_in_predators(int p_iG, GameObject p_xGobj){
+		if (Predators.Contains(p_xGobj)){
+			return p_iG;
+		}
+		
+		return 0;
+	}
+	
+	public int is_in_edible(int p_iG, GameObject p_xGobj){
+		if (Edible.Contains(p_xGobj)){
+			return p_iG;
+		}
+		
+		return 0;
+	}
+	
+	public int is_in_impassable(int p_iG, GameObject p_xGobj){
+		if (Impassable.Contains(p_xGobj)){
+			return p_iG;
+		}
+		
+		return 0;
+	}
+	
+	public int is_in_passable(int p_iG, GameObject p_xGobj){
+		if (Passable.Contains(p_xGobj)){
+			return p_iG;
+		}
+		
+		return 0;
+	}
+	
+	public int is_in_water(int p_iG, GameObject p_xGobj){
+		if (Water.Contains(p_xGobj)){
+			return p_iG;
+		}
+		
+		return 0;
 	}
 }
