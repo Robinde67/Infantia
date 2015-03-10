@@ -7,6 +7,9 @@ public class Path {
 		m_iX = p_iX;
 		m_iY = p_iY;
 		
+		m_iGoalX = p_iGoalX;
+		m_iGoalY = p_iGoalY;
+		
 		m_iF = (m_iG = p_iG) + (m_iH = get_H(p_iX, p_iY));
 		
 		m_xGameObject = p_xGobj;
@@ -66,17 +69,17 @@ public class AI_Base : MonoBehaviour {
 	}
 
 	void FixedUpdate () {
-		clear ();
-		
 		//sense(m_xGrid.test[(int)m_xPos.x][(int)m_xPos.y], 0);
 		if (m_iCurrent >= m_iSpeed){
+			m_xaPath.Clear();
 			sense (new Path(0, (int)m_xPos.x, (int)m_xPos.y, (int)m_xGoal.x, (int)m_xGoal.y, m_xGrid.test[(int)m_xPos.x][(int)m_xPos.y]));
 			m_iCurrent = 0;
-			print (" ");
 		}
 		
 		decide ();
 		act ();
+		
+		clear ();
 		
 		if (m_xPos.x >= m_xGrid.x){
 			m_xPos.x = m_xGrid.x - 1;
@@ -94,7 +97,13 @@ public class AI_Base : MonoBehaviour {
 			m_xPos.y = 0;
 		}
 		
-		this.transform.position = m_xGrid.test[(int)m_xPos.x][(int)m_xPos.y].transform.position;
+		if ((int)m_xPos.x != (int)m_xGoal.x && (int)m_xPos.y != (int)m_xPos.y){
+			print (m_xPos.x);
+			print (m_xPos.y);
+			print (" ");
+		}
+		
+		gameObject.transform.position = m_xGrid.test[(int)m_xPos.x][(int)m_xPos.y].transform.position;
 	}
 	
 	void sense (Path p_xGobj) {
@@ -132,11 +141,11 @@ public class AI_Base : MonoBehaviour {
 		
 		for (int i = -1; i < 2; i++){
 			for (int ii = -1; ii < 2; ii++){
-				if (!(i + x > m_xGrid.x || i + x < 0)){
-					if (!(ii + y > m_xGrid.y || ii + y < 0)){
-						if (!(i == 0 && ii == 0)) {
-							m_xaOpenList.Add(new Path(p_xGobj.m_iG + 10, i + x, ii + y, (int)m_xGoal.x, (int)m_xGoal.y, m_xGrid.test[x + i][y + ii]));
-						}
+				if (!(i + x >= m_xGrid.x || i + x < 0)){
+					if (!(ii + y >= m_xGrid.y || ii + y < 0)){
+						//if (!(i == 0 && ii == 0)) {
+						m_xaOpenList.Add(new Path(p_xGobj.m_iG + get_G(10, i, ii, m_xGrid.test[x + i][y + ii]), i + x, ii + y, (int)m_xGoal.x, (int)m_xGoal.y, m_xGrid.test[x + i][y + ii]));
+						//}
 					}
 				}
 			}
@@ -163,9 +172,11 @@ public class AI_Base : MonoBehaviour {
 			print (m_xaOpenList[_iI].m_iY);
 			
 			print ((int)m_xGoal.x);
-			print ((int)m_xGoal.y);*/
+			print ((int)m_xGoal.y);
 			
-			if ((m_xaOpenList[_iI].m_iX == (int)m_xGoal.x && m_xaOpenList[_iI].m_iY == (int)m_xGoal.y) || (m_xaOpenList[_iI].m_iG >= m_iSight)){			
+			print ("-");*/
+			
+			if ((m_xaOpenList[_iI].m_iX == (int)m_xGoal.x && m_xaOpenList[_iI].m_iY == (int)m_xGoal.y) || (m_xaOpenList[_iI].m_iG >= m_iSight)){
 				return;
 			}
 			else {
@@ -182,11 +193,11 @@ public class AI_Base : MonoBehaviour {
 	}
 	
 	void act () {
-		print (m_iCurrent);
+		/*print (m_iCurrent);
 		print (m_xaPath[0].m_iX);
 		print (m_xaPath[0].m_iY);
 		
-		print ("-");
+		print ("-");*/
 		
 		if (m_xaPath.Count > 0){
 			m_xPos.x = m_xaPath[0].m_iX;
@@ -202,7 +213,7 @@ public class AI_Base : MonoBehaviour {
 		m_xaClosedList.Clear();
 		m_xaOpenList.Clear();
 		
-		m_xNext = m_xPos;
+		//m_xNext = m_xPos;
 	}
 	
 	int get_F(int G, int Hx, int Hy){
@@ -221,9 +232,23 @@ public class AI_Base : MonoBehaviour {
 		return (int)(_xV.x + _xV.y);
 	}
 	
+	int get_G(int p_iG, int p_iX, int p_iY, GameObject p_xGobj){
+		if (p_iX / 1 == p_iY / 1 && !(p_iX == 0 || p_iY == 0)){
+			p_iG += 4;
+		}
+		
+		p_iG+=
+		+ m_xGrid.is_in_critters(10, p_xGobj)
+		+ m_xGrid.is_in_edible(10, p_xGobj)
+		+ m_xGrid.is_in_impassable(50, p_xGobj)
+		+ m_xGrid.is_in_passable(5, p_xGobj)
+		+ m_xGrid.is_in_predators(50, p_xGobj)
+		+ m_xGrid.is_in_water(25, p_xGobj);
+		
+		return p_iG;
+	}
+	
 	void move (Vector2 p_fVelocity) {
-		
-		
 		if (p_fVelocity.x > 1){
 			p_fVelocity.x = 1;
 		}
