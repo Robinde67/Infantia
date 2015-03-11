@@ -1,13 +1,17 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class Human_Needs : MonoBehaviour {
+public class Health : MonoBehaviour {
 
     public float drain;
 
 	public float hunger;
 	public float sleepy;
 	public float boredom;
+
+    public float poison;
+    public float injury;
+
     public Personality person;
 
 	// Use this for initialization
@@ -15,6 +19,10 @@ public class Human_Needs : MonoBehaviour {
 		hunger = 255;
 		sleepy = 255;
 		boredom = 255;
+
+        poison = 0;
+        injury = 0;
+
         person = GetComponentInParent<Personality>();
 	}
 	
@@ -44,5 +52,20 @@ public class Human_Needs : MonoBehaviour {
             real_drain = 0.1f * Time.fixedDeltaTime;;
         }
         sleepy -= real_drain;
+
+        if (poison < 0)
+        {
+            poison = 0;
+        } else if (poison > 0)
+        {
+            poison -= Time.fixedDeltaTime / 10;
+        }
+        if (injury < 0)
+        {
+            injury = 0;
+        } else if (injury > 0)
+        {
+            injury -= Time.fixedDeltaTime / 60;
+        }
     }
 }

@@ -7,13 +7,15 @@ public class Status_Bar : MonoBehaviour {
     {
         HUNGER,
         SLEEPY,
-        BOREDOM
+        BOREDOM,
+        POISON,
+        INJURY
     }
     public Type type;
 
     private Slider sl;
 
-    public Human_Needs infant;
+    public Health infant;
 	// Use this for initialization
 	void Start ()
     {
@@ -33,6 +35,12 @@ public class Status_Bar : MonoBehaviour {
                 break;
             case Type.BOREDOM:
                 sl.value = infant.boredom;
+                break;
+            case Type.POISON:
+                sl.value = infant.poison;
+                break;
+            case Type.INJURY:
+                sl.value = infant.injury;
                 break;
         }
 	}
