@@ -236,7 +236,7 @@ public class AI_Base : MonoBehaviour {
 		if (p_iX / 1 == p_iY / 1 && !(p_iX == 0 || p_iY == 0)){
 			p_iG += 4;
 		}
-		
+		/*
 		p_iG+=
 		+ m_xGrid.is_in_critters(10, p_xGobj)
 		+ m_xGrid.is_in_edible(10, p_xGobj)
@@ -244,7 +244,7 @@ public class AI_Base : MonoBehaviour {
 		+ m_xGrid.is_in_passable(5, p_xGobj)
 		+ m_xGrid.is_in_predators(50, p_xGobj)
 		+ m_xGrid.is_in_water(25, p_xGobj);
-		
+		*/
 		return p_iG;
 	}
 	

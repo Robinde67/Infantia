@@ -34,7 +34,7 @@ public class AI_astar : MonoBehaviour {
 			}
 			if(go.tag == "Passable")
 			{
-				return 5.0f;
+				return 15.0f;
 			}
 			if(go.tag == "Predator")
 			{
