@@ -1158,6 +1158,7 @@ GameObject:
   - 50: {fileID: 1159669298}
   - 114: {fileID: 1159669299}
   - 58: {fileID: 1159669300}
+  - 114: {fileID: 1159669302}
   m_Layer: 0
   m_Name: Infant
   m_TagString: Untagged
@@ -1292,6 +1293,17 @@ MonoBehaviour:
   target: {x: 19, y: 19, z: 0}
   movSpeed: 1
   spawnPlanes: 0
+--- !u!114 &1159669302
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1159669293}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9e14762b677948b49bd3cc55940b66b1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1160115229
 GameObject:
   m_ObjectHideFlags: 0

@@ -7,6 +7,7 @@ public class Edible : MonoBehaviour {
     [System.Serializable]
     public struct Effects
     {
+		public Vector3 position;
         public short hunger,
         poison,
         pain,
@@ -45,7 +46,7 @@ public class Edible : MonoBehaviour {
         }
         if (m_elapsed_time >= m_spawn_time)
         {
-            GetComponentInParent<SpriteRenderer>().enabled = true;
+			GetComponent<SpriteRenderer>().enabled = true;
             m_elapsed_time = 0;
             if(m_amount < m_max_amount)
             {
@@ -62,7 +63,7 @@ public class Edible : MonoBehaviour {
             m_amount--;
             if (m_amount == 0)
             {
-                GetComponentInParent<SpriteRenderer>().enabled = false;
+                GetComponent<SpriteRenderer>().enabled = false;
             }
             return m_effects;
         }
@@ -78,10 +79,16 @@ public class Edible : MonoBehaviour {
     public Effects Sense()
     {
         Effects percieve;
+		percieve.position = transform.position;
         percieve.hunger = (short)Random.Range(0, m_effects.hunger);
         percieve.pain = (short)Random.Range(0, m_effects.pain);
         percieve.poison = (short)Random.Range(0, m_effects.poison);
         percieve.taste = (short)Random.Range(0, m_effects.taste);
         return percieve;
     }
+
+	void OnTriggerEnter2D(Collider2D other)
+	{
+		other.SendMessage("OnFoundEdible", m_effects, SendMessageOptions.DontRequireReceiver);
+	}
 }

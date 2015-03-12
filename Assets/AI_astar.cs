@@ -26,7 +26,7 @@ public class AI_astar : MonoBehaviour {
 			}
 			if(go.tag == "Edible")
 			{
-				return 10.0f;
+				return 7.0f;
 			}
 			if(go.tag == "Impassable")
 			{
@@ -77,7 +77,7 @@ public class AI_astar : MonoBehaviour {
 	// Use this for initialization
 	void Start ()
 	{
-		InitAStar();
+		//InitAStar();
 	}
 	
 	public void InitAStar()
@@ -171,7 +171,7 @@ public class AI_astar : MonoBehaviour {
 			{
 				if((Vector3)target == adjacentNodes[i].go.transform.position)
 				{
-					Debug.Log ("Target found");
+					Debug.Log ("Target found, laps = " + p);
 					pathNodes.Add(adjacentNodes[i]);
 					Node tempNode = adjacentNodes[i];
 					while(tempNode.parent != null)
@@ -200,7 +200,7 @@ public class AI_astar : MonoBehaviour {
 		if(!recalculate)
 		{
 			Vector3 newPos = pathNodes[pathIndex].go.transform.position;
-			Debug.Log (string.Format("G: {0}, H: {1}, tag: {2}", pathNodes[pathIndex].G, pathNodes[pathIndex].H, pathNodes[pathIndex].go.tag));
+			//Debug.Log (string.Format("G: {0}, H: {1}, tag: {2}", pathNodes[pathIndex].G, pathNodes[pathIndex].H, pathNodes[pathIndex].go.tag));
 			//Check with "onUpdate" if it should stop or not
 			iTween.MoveTo(gameObject, iTween.Hash("x", newPos.x, "y", newPos.y, "easeType", "linear", "speed", movSpeed * Time.deltaTime * 100.0f, 
 				                                      "onComplete", "NextNode", "onUpdate", "MoveUpdate"));
@@ -233,9 +233,20 @@ public class AI_astar : MonoBehaviour {
 		}
 	}
 
+	public void Recalculate(Vector3 _target)
+	{
+		target = _target;
+		recalculate = true;
+	}
+
 	public void Recalculate()
 	{
 		recalculate = true;
+	}
+
+	public void SetTarget(Vector3 _target)
+	{
+		target = _target;
 	}
 
 	void SpawnPlane(Vector3 pos, bool green)
