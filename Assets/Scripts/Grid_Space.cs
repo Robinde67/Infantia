@@ -9,6 +9,7 @@ public class Grid_Space : MonoBehaviour {
 
 	public GameObject Grid_Container;
 	public GameObject Background;
+	public GameObject Background_Container;
 
     public int spawn_frequency = 5; //Lower is more frequent
     public int frequency_critters; //Higher is more frequent
@@ -29,7 +30,7 @@ public class Grid_Space : MonoBehaviour {
 	//public GameObject[,] grid;
 
 	// Use this for initialization
-	void Start () {
+	void Awake () { //Awake runs before Start, but better to spawn infants as prefabs in here 
 
         Object[] SubList_Critters = Resources.LoadAll("Prefabs/World Objects/Critters", typeof(GameObject));
         Object[] SubList_Predators = Resources.LoadAll("Prefabs/World Objects/Predators", typeof(GameObject));
@@ -76,6 +77,10 @@ public class Grid_Space : MonoBehaviour {
 			{
 				GameObject bg = Instantiate(Background, new Vector3(i * size, j * size), Background.transform.rotation) as GameObject;
 				bg.transform.localScale = bg.transform.localScale * 0.1f;
+				if(Background_Container)
+				{
+					bg.transform.parent = Background_Container.transform;
+				}
 
 				if(Random.Range(0, spawn_frequency) == 0)
 				{
@@ -131,58 +136,11 @@ public class Grid_Space : MonoBehaviour {
 				else
 				{
 					GameObject go = new GameObject();
+					go.transform.position = new Vector3(i, j);
 					go.transform.parent = Grid_Container.transform;
 					test[i].Add(go);
 				}
 			}
 		}
-	}
-	
-	public int is_in_critters(int p_iG, GameObject p_xGobj){
-		if (Critters.Contains(p_xGobj)){
-			return p_iG;
-		}
-		
-		return 0;
-	}
-	
-	public int is_in_predators(int p_iG, GameObject p_xGobj){
-		if (Predators.Contains(p_xGobj)){
-			return p_iG;
-		}
-		
-		return 0;
-	}
-	
-	public int is_in_edible(int p_iG, GameObject p_xGobj){
-		if (Edible.Contains(p_xGobj)){
-			return p_iG;
-		}
-		
-		return 0;
-	}
-	
-	public int is_in_impassable(int p_iG, GameObject p_xGobj){
-		if (Impassable.Contains(p_xGobj)){
-			return p_iG;
-		}
-		
-		return 0;
-	}
-	
-	public int is_in_passable(int p_iG, GameObject p_xGobj){
-		if (Passable.Contains(p_xGobj)){
-			return p_iG;
-		}
-		
-		return 0;
-	}
-	
-	public int is_in_water(int p_iG, GameObject p_xGobj){
-		if (Water.Contains(p_xGobj)){
-			return p_iG;
-		}
-		
-		return 0;
 	}
 }

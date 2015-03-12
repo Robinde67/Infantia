@@ -12,7 +12,7 @@ GameObject:
   - 58: {fileID: 5899028}
   m_Layer: 0
   m_Name: TempFood
-  m_TagString: World Object
+  m_TagString: Edible
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

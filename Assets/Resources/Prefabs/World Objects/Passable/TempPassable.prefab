@@ -12,7 +12,7 @@ GameObject:
   - 58: {fileID: 5827658}
   m_Layer: 0
   m_Name: TempPassable
-  m_TagString: World Object
+  m_TagString: Passable
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
