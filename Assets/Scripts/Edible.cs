@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 
@@ -7,7 +7,6 @@ public class Edible : MonoBehaviour {
     [System.Serializable]
     public struct Effects
     {
-		public Vector3 position;
         public short hunger,
         poison,
         pain,
@@ -79,7 +78,6 @@ public class Edible : MonoBehaviour {
     public Effects Sense()
     {
         Effects percieve;
-		percieve.position = transform.position;
         percieve.hunger = (short)Random.Range(0, m_effects.hunger);
         percieve.pain = (short)Random.Range(0, m_effects.pain);
         percieve.poison = (short)Random.Range(0, m_effects.poison);
@@ -89,6 +87,7 @@ public class Edible : MonoBehaviour {
 
 	void OnTriggerEnter2D(Collider2D other)
 	{
-		other.SendMessage("OnFoundEdible", m_effects, SendMessageOptions.DontRequireReceiver);
+		other.SendMessage("OnFoundEdible", gameObject, SendMessageOptions.DontRequireReceiver);
+
 	}
 }
