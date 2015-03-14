@@ -9,7 +9,7 @@ public class AI_astar : MonoBehaviour {
 		public Node(GameObject _go, Vector3 _target, AI_astar pastar)
 		{
 			go = _go;
-			G = get_G(_go, pastar.mem);
+			G = get_G(_go);
 			H = get_H(_go, _target);
 		}
 
@@ -18,7 +18,7 @@ public class AI_astar : MonoBehaviour {
 		public GameObject go;
 		public Node parent = null;
 
-		public float get_G(GameObject _go, Memory pmem)
+		public float get_G(GameObject _go)
 		{
 			if(go.tag == "Critter")
 			{
@@ -26,7 +26,6 @@ public class AI_astar : MonoBehaviour {
 			}
 			if(go.tag == "Edible")
 			{
-				pmem.OnFoundEdible(_go);
 				return 7.0f;
 			}
 			if(go.tag == "Impassable")
@@ -74,25 +73,14 @@ public class AI_astar : MonoBehaviour {
 	private List<Node> pathNodes = new List<Node>();
 	private int pathIndex = -1;
 	private bool recalculate = false;
-	
-	private float sprint = 0.0f;
-	public float maxsprint;
-	
-	public Memory mem;
 
 	// Use this for initialization
 	void Start ()
 	{
 		//InitAStar();
-		
-		mem = GetComponent<Memory>();
+
 	}
-	
-	void FixedUpdate()
-	{
-		sprint += Time.deltaTime;
-	}
-	
+
 	public void InitAStar()
 	{
 		Clear();
@@ -196,7 +184,7 @@ public class AI_astar : MonoBehaviour {
 					return;
 				}
 				adjacentNodes[i].G = adjacentNodes[i].parent.G + (Vector3.Distance(adjacentNodes[i].go.transform.position, adjacentNodes[i].parent.go.transform.position)
-				                                                  + adjacentNodes[i].get_G(adjacentNodes[i].go, mem) + 10.0f);
+				                                                  + adjacentNodes[i].get_G(adjacentNodes[i].go) + 10.0f);
 				openNodes.Add(adjacentNodes[i]);
 			}
 			adjacentNodes.Clear();
@@ -208,11 +196,6 @@ public class AI_astar : MonoBehaviour {
 
 	void MoveToTarget()
 	{
-		if (sprint > maxsprint){
-			print ("Sprint:" + sprint);
-			recalculate = true;
-			sprint = 0.0f;
-		}
 		
 		//Check if movement is done, else cancel if commanded
 		if(!recalculate)
