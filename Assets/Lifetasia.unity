@@ -1290,9 +1290,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   grid: {fileID: 1980890189}
   tempplane: {fileID: 175164, guid: f6cee871fd82fd441969388c3eee6250, type: 2}
-  target: {x: 19, y: 19, z: 0}
+  target: {x: 10, y: 5, z: 0}
   movSpeed: 1
   spawnPlanes: 0
+  maxsprint: 2
+  mem: {fileID: 0}
 --- !u!114 &1159669302
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1304,6 +1306,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9e14762b677948b49bd3cc55940b66b1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  memories_edible: []
 --- !u!1 &1160115229
 GameObject:
   m_ObjectHideFlags: 0

@@ -75,10 +75,10 @@ public class Memory : MonoBehaviour {
 	
 	public Vector3 FindEdible(GameObject _go)
 	{
-		EdibleEffects TempEffects = memories_edible[0];
-		
-		// Idea: somehow turning the different values (pain, poison, tasty and hunger) into something akin to the FGH values.
+		// Idea: Somehow turning the different values (pain, poison, tasty and hunger) into something akin to the FGH values.
 		// However, I wouldn't like to do this just out of the blue, besides I need sleep...
+		
+		EdibleEffects TempEffects = memories_edible[0];
 		
 		for (int i = 0; i < memories_edible.Count; i++)
 		{
