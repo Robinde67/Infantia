@@ -5,11 +5,11 @@ using System.Collections.Generic;
 public class AI_astar : MonoBehaviour {
 
 	private class Node
-	{
-		public Node(GameObject _go, Vector3 _target)
+	{		
+		public Node(GameObject _go, Vector3 _target, AI_astar pastar)
 		{
 			go = _go;
-			G = get_G(_go);
+			G = get_G(_go, pastar.mem);
 			H = get_H(_go, _target);
 		}
 
@@ -18,7 +18,7 @@ public class AI_astar : MonoBehaviour {
 		public GameObject go;
 		public Node parent = null;
 
-		public float get_G(GameObject go)
+		public float get_G(GameObject _go, Memory pmem)
 		{
 			if(go.tag == "Critter")
 			{
@@ -26,6 +26,7 @@ public class AI_astar : MonoBehaviour {
 			}
 			if(go.tag == "Edible")
 			{
+				pmem.OnFoundEdible(_go);
 				return 7.0f;
 			}
 			if(go.tag == "Impassable")
@@ -73,16 +74,27 @@ public class AI_astar : MonoBehaviour {
 	private List<Node> pathNodes = new List<Node>();
 	private int pathIndex = -1;
 	private bool recalculate = false;
+	
+	private float sprint = 0.0f;
+	public float maxsprint;
+	
+	public Memory mem;
 
 	// Use this for initialization
 	void Start ()
 	{
 		//InitAStar();
+		
+		mem = GetComponent<Memory>();
+	}
+	
+	void FixedUpdate()
+	{
+		sprint += Time.deltaTime;
 	}
 	
 	public void InitAStar()
 	{
-
 		Clear();
 		CalculatePath();
 	}
@@ -98,7 +110,7 @@ public class AI_astar : MonoBehaviour {
 	void CalculatePath()
 	{
 		transform.position = new Vector3(Mathf.Round(transform.position.x), Mathf.Round(transform.position.y)); //Needs to change
-		Node startNode = new Node(grid.test[(int)transform.position.x][(int)transform.position.y], target);
+		Node startNode = new Node(grid.test[(int)transform.position.x][(int)transform.position.y], target, this);
 		startNode.G += 10.0f;
 		openNodes.Add(startNode);
 
@@ -127,7 +139,7 @@ public class AI_astar : MonoBehaviour {
 					float dist = Vector3.Distance(grid.test[i][j].transform.position, currentNode.go.transform.position);
 					if(dist < 1.5f && dist > 0.1f)
 					{
-						Node tempNode = new Node(grid.test[i][j], target);
+						Node tempNode = new Node(grid.test[i][j], target, this);
 						tempNode.parent = currentNode;
 						//If it exists in openNodes/closedNodes and got a lower F value there, skip
 						bool ignore = false;
@@ -184,7 +196,7 @@ public class AI_astar : MonoBehaviour {
 					return;
 				}
 				adjacentNodes[i].G = adjacentNodes[i].parent.G + (Vector3.Distance(adjacentNodes[i].go.transform.position, adjacentNodes[i].parent.go.transform.position)
-				                                                  + adjacentNodes[i].get_G(adjacentNodes[i].go) + 10.0f);
+				                                                  + adjacentNodes[i].get_G(adjacentNodes[i].go, mem) + 10.0f);
 				openNodes.Add(adjacentNodes[i]);
 			}
 			adjacentNodes.Clear();
@@ -196,6 +208,12 @@ public class AI_astar : MonoBehaviour {
 
 	void MoveToTarget()
 	{
+		if (sprint > maxsprint){
+			print ("Sprint:" + sprint);
+			recalculate = true;
+			sprint = 0.0f;
+		}
+		
 		//Check if movement is done, else cancel if commanded
 		if(!recalculate)
 		{

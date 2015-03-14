@@ -17,6 +17,4 @@ public class Personality : MonoBehaviour {
         social = (short)Random.Range(-variety, variety);
         intelligence = (short)Random.Range(-variety, variety);
 	}
-	
-
 }

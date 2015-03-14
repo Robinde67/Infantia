@@ -10,9 +10,13 @@ public class Memory : MonoBehaviour {
         public string name;
         public List<Vector3> positions;
         public Edible.Effects effects;
+        
+        public float GetValue(){
+			return (effects.hunger + effects.taste - effects.pain - effects.poison);
+        }
 	}
 
-	List<EdibleEffects> memories_edible = new List<EdibleEffects>();
+	public List<EdibleEffects> memories_edible = new List<EdibleEffects>();
 	AI_astar astar;
 
 	// Use this for initialization
@@ -33,7 +37,7 @@ public class Memory : MonoBehaviour {
 
 	}
 
-	void OnFoundEdible(GameObject _go) //Is it possible to send a struct directly in some way? // You need more than should be sent through a struct alone.
+	public void OnFoundEdible(GameObject _go) //Is it possible to send a struct directly in some way? // You need more than should be sent through a struct alone.
 	{
         if (!_go.GetComponent<SpriteRenderer>().enabled)
         {
@@ -67,5 +71,23 @@ public class Memory : MonoBehaviour {
         //Only for inital impression, increase with the actual values when eaten at a later point
         ef.effects = _go.GetComponent<Edible>().Sense();
         memories_edible.Add(ef);
+	}
+	
+	public Vector3 FindEdible(GameObject _go)
+	{
+		EdibleEffects TempEffects = memories_edible[0];
+		
+		// Idea: somehow turning the different values (pain, poison, tasty and hunger) into something akin to the FGH values.
+		// However, I wouldn't like to do this just out of the blue, besides I need sleep...
+		
+		for (int i = 0; i < memories_edible.Count; i++)
+		{
+			if (memories_edible[i].GetValue() > TempEffects.GetValue())
+			{
+				TempEffects = memories_edible[i];
+			}
+		}
+		
+		return TempEffects.positions[0];
 	}
 }
