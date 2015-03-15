@@ -7,7 +7,6 @@ public class Memory : MonoBehaviour {
     [System.Serializable]
 	public struct EdibleEffects
 	{
-        public string name;
         public List<Vector3> positions;
         public Edible.Effects effects;
         
@@ -46,7 +45,7 @@ public class Memory : MonoBehaviour {
         }
 		for(int i = 0; i < memories_edible.Count; i++)
 		{
-			if(memories_edible[i].name == _go.name)
+			if(memories_edible[i].effects.name == _go.name)
 			{
 				//Gonna need to change depending on how accurate the memory should be. Not enough time or brain-capacity to think now
                 //*For what I assume, we should only have this trigger when in an adjacent square, can that be fixed?
@@ -65,7 +64,7 @@ public class Memory : MonoBehaviour {
 		}
         //Create memory if it does not exist
         EdibleEffects ef;
-        ef.name = _go.name;
+        ef.effects.name = _go.name;
         ef.positions = new List<Vector3>();
         ef.positions.Add(_go.transform.position);
         //Only for inital impression, increase with the actual values when eaten at a later point
@@ -89,5 +88,22 @@ public class Memory : MonoBehaviour {
 		}
 		
 		return TempEffects.positions[0];
+	}
+	public void Eaten(Edible.Effects ef)
+	{
+		for (int i = 0; i < memories_edible.Count; i++)
+		{
+			if(memories_edible[i].effects.name == ef.name)
+			{
+				//iTween increase in this later too.
+				EdibleEffects temp = memories_edible[i];
+				temp.effects.hunger += ef.hunger;
+				temp.effects.pain += ef.pain;
+				temp.effects.poison += ef.poison;
+				temp.effects.taste += ef.taste;
+				memories_edible[i] = temp;
+				break;
+			}
+		}
 	}
 }

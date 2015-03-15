@@ -66,6 +66,7 @@ public class AI_astar : MonoBehaviour {
 	public Vector3 target = new Vector3(5.0f, 5.0f);
 	public float movSpeed = 1.0f;
 	public bool spawnPlanes = false;
+	public bool reachedDestination = false;
 
 	private List<Node> openNodes = new List<Node>();
 	private List<Node> closedNodes = new List<Node>();
@@ -79,6 +80,15 @@ public class AI_astar : MonoBehaviour {
 	{
 		//InitAStar();
 
+	}
+
+	void FixedUpdate()
+	{
+		if (recalculate && reachedDestination)
+		{
+			reachedDestination = false;
+			MoveToTarget();
+		}
 	}
 
 	public void InitAStar()
@@ -103,7 +113,7 @@ public class AI_astar : MonoBehaviour {
 		openNodes.Add(startNode);
 
 		int p = 0;
-		while(openNodes.Count > 0 && p < 5000)
+		while(openNodes.Count > 0 && p < 1000)
 		{
 			Node currentNode = openNodes[0];
 			for(int i = 0; i < openNodes.Count; i++)
@@ -192,6 +202,8 @@ public class AI_astar : MonoBehaviour {
 			p++;
 		}
 		Debug.Log ("Could not find a path, laps = " + p);
+		reachedDestination = true;
+		gameObject.SendMessage("ReachedDestination");
 	}
 
 	void MoveToTarget()
@@ -222,6 +234,8 @@ public class AI_astar : MonoBehaviour {
 		else
 		{
 			pathIndex = -1;
+			reachedDestination = true;
+			gameObject.SendMessage("ReachedDestination");
 		}
 	}
 

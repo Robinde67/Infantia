@@ -7,6 +7,7 @@ public class Edible : MonoBehaviour {
     [System.Serializable]
     public struct Effects
     {
+		public string name;
         public short hunger,
         poison,
         pain,
@@ -78,6 +79,7 @@ public class Edible : MonoBehaviour {
     public Effects Sense()
     {
         Effects percieve;
+		percieve.name = gameObject.name;
         percieve.hunger = (short)Random.Range(0, m_effects.hunger);
         percieve.pain = (short)Random.Range(0, m_effects.pain);
         percieve.poison = (short)Random.Range(0, m_effects.poison);

@@ -13,6 +13,7 @@ public class Health : MonoBehaviour {
     public float injury;
 
     public Personality person;
+	public Memory memory;
 
 	// Use this for initialization
 	void Start () {
@@ -23,7 +24,8 @@ public class Health : MonoBehaviour {
         poison = 0;
         injury = 0;
 
-        person = GetComponentInParent<Personality>();
+        person = gameObject.GetComponent<Personality>();
+		memory = gameObject.GetComponent<Memory>();
 	}
 	
 	// Update is called once per frame
@@ -68,4 +70,12 @@ public class Health : MonoBehaviour {
             injury -= Time.fixedDeltaTime / 60;
         }
     }
+
+	public void Eat(Edible.Effects effects)
+	{
+		//use iTween later
+		hunger += effects.hunger;
+		poison += effects.poison;
+		memory.Eaten(effects);
+	}
 }

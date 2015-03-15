@@ -130,7 +130,7 @@ public class AI_Loop : MonoBehaviour
                 Action explore = new Action();
                 explore.act = Activity.MOVE;
                 explore.weight = Random.Range(0,100);
-                explore.location = new Vector3(Random.Range(0,m_grid.x), Random.Range(0,m_grid.x));
+                explore.location = new Vector3(Random.Range(0,m_grid.x-1), Random.Range(0,m_grid.x-1));
                 if(explore.weight > m_proposed_action.weight)
                 {
                     m_proposed_action = explore;
@@ -165,5 +165,27 @@ public class AI_Loop : MonoBehaviour
         m_astar.Recalculate(m_current_action.location);
         m_current_action.weight += 1;
     }
+
+	void ReachedDestination()
+	{
+		switch (m_current_action.act)
+		{
+		case Activity.EAT:
+			m_health.Eat((m_grid.test[(int)m_current_action.location.x][(int)m_current_action.location.y].GetComponent<Edible>().Eat()));
+			m_current_action.act = Activity.STANDBY;
+			m_current_action.weight = 0;
+			break;
+		case Activity.INTERACT:
+			//do stuff
+			break;
+		case Activity.MOVE:
+			m_current_action.act = Activity.STANDBY;
+			m_current_action.weight = 0;
+			break;
+		case Activity.SLEEP:
+			//do stuff
+			break;
+		}
+	}
 
 }
