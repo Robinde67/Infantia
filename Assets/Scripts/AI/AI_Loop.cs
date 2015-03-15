@@ -70,7 +70,7 @@ public class AI_Loop : MonoBehaviour
         //Set current weight to 0 and action to STANDBY when the destination is reached and the action performed
 
         if (sprint > maxsprint){
-            print ("Sprint:" + sprint);
+            //print ("Sprint:" + sprint);
             sprint = 0.0f;
 
             m_proposed_action.act = Activity.STANDBY;
@@ -130,7 +130,7 @@ public class AI_Loop : MonoBehaviour
                 Action explore = new Action();
                 explore.act = Activity.MOVE;
                 explore.weight = Random.Range(0,100);
-                explore.location = new Vector3(Random.Range(0,m_grid.x-1), Random.Range(0,m_grid.x-1));
+                explore.location = new Vector3(Random.Range(0, m_grid.x - 1), Random.Range(0, m_grid.y - 1));
                 if(explore.weight > m_proposed_action.weight)
                 {
                     m_proposed_action = explore;
@@ -166,8 +166,9 @@ public class AI_Loop : MonoBehaviour
         m_current_action.weight += 1;
     }
 
-	void ReachedDestination()
+	public void ReachedDestination()
 	{
+		//Debug.Log ("Reached Destination");
 		switch (m_current_action.act)
 		{
 		case Activity.EAT:

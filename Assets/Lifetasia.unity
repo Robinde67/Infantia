@@ -1200,8 +1200,8 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1159669293}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 13.5699997, y: 4.9000001, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalPosition: {x: 3.05999994, y: 3.07999992, z: 0}
+  m_LocalScale: {x: .800000012, y: .800000012, z: 1}
   m_Children:
   - {fileID: 695036151}
   m_Father: {fileID: 0}
@@ -1239,6 +1239,7 @@ MonoBehaviour:
   poison: 0
   injury: 0
   person: {fileID: 1159669296}
+  memory: {fileID: 0}
 --- !u!50 &1159669298
 Rigidbody2D:
   m_ObjectHideFlags: 0
@@ -1290,10 +1291,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   grid: {fileID: 1980890189}
-  tempplane: {fileID: 0}
+  tempplane: {fileID: 175164, guid: f6cee871fd82fd441969388c3eee6250, type: 2}
   target: {x: 5, y: 5, z: 0}
   movSpeed: 1
   spawnPlanes: 0
+  reachedDestination: 0
+  maxLaps: 500
 --- !u!114 &1159669302
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2350,7 +2353,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 2076903558}
   m_LocalRotation: {x: .384186804, y: -.0849167481, z: .176087335, w: .902320862}
-  m_LocalPosition: {x: 2.66000009, y: 4.98000002, z: -3.11999989}
+  m_LocalPosition: {x: -2.70000005, y: 3.50999999, z: -4.80000019}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}

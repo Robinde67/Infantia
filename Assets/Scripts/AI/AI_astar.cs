@@ -67,6 +67,7 @@ public class AI_astar : MonoBehaviour {
 	public float movSpeed = 1.0f;
 	public bool spawnPlanes = false;
 	public bool reachedDestination = false;
+	public int maxLaps = 1000;
 
 	private List<Node> openNodes = new List<Node>();
 	private List<Node> closedNodes = new List<Node>();
@@ -74,6 +75,7 @@ public class AI_astar : MonoBehaviour {
 	private List<Node> pathNodes = new List<Node>();
 	private int pathIndex = -1;
 	private bool recalculate = false;
+	private Vector3 lastTarget;
 
 	// Use this for initialization
 	void Start ()
@@ -109,11 +111,22 @@ public class AI_astar : MonoBehaviour {
 	{
 		transform.position = new Vector3(Mathf.Round(transform.position.x), Mathf.Round(transform.position.y)); //Needs to change
 		Node startNode = new Node(grid.test[(int)transform.position.x][(int)transform.position.y], target, this);
-		startNode.G += 10.0f;
+		startNode.G += 0.0f;
 		openNodes.Add(startNode);
 
+		if(target != lastTarget)
+		{
+			lastTarget = target;
+		}
+		else
+		{
+			target = new Vector3(Random.Range(0, grid.x - 1), Random.Range(0, grid.y - 1));
+			Debug.LogError("Target did not change. Target set to " + target.x + "|" + target.y);
+			//InitAStar();
+		}
+
 		int p = 0;
-		while(openNodes.Count > 0 && p < 1000)
+		while(openNodes.Count > 0 && p < maxLaps)
 		{
 			Node currentNode = openNodes[0];
 			for(int i = 0; i < openNodes.Count; i++)
@@ -181,7 +194,7 @@ public class AI_astar : MonoBehaviour {
 			{
 				if((Vector3)target == adjacentNodes[i].go.transform.position)
 				{
-					Debug.Log ("Target found, laps = " + p);
+					Debug.Log ("Target found, laps = " + p + "\nTarget pos: " + target.x + "|" + target.y);
 					pathNodes.Add(adjacentNodes[i]);
 					Node tempNode = adjacentNodes[i];
 					while(tempNode.parent != null)
@@ -201,9 +214,10 @@ public class AI_astar : MonoBehaviour {
 			closedNodes.Add(currentNode);
 			p++;
 		}
-		Debug.Log ("Could not find a path, laps = " + p);
+		Debug.Log ("Could not find a path, laps = " + p + "\nTarget pos: " + target.x + "|" + target.y);
 		reachedDestination = true;
-		gameObject.SendMessage("ReachedDestination");
+		GetComponent<AI_Loop>().ReachedDestination();
+		//gameObject.SendMessage("ReachedDestination");
 	}
 
 	void MoveToTarget()
@@ -234,8 +248,10 @@ public class AI_astar : MonoBehaviour {
 		else
 		{
 			pathIndex = -1;
+			iTween.Stop (gameObject, "mov");
 			reachedDestination = true;
-			gameObject.SendMessage("ReachedDestination");
+			GetComponent<AI_Loop>().ReachedDestination();
+			//gameObject.SendMessage("ReachedDestination");
 		}
 	}
 
