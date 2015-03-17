@@ -11,6 +11,7 @@ GameObject:
   - 212: {fileID: 21216386}
   - 58: {fileID: 5869858}
   - 114: {fileID: 11401818}
+  - 114: {fileID: 11437410}
   m_Layer: 0
   m_Name: Rock
   m_TagString: Edible
@@ -42,7 +43,7 @@ CircleCollider2D:
   m_UsedByEffector: 0
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
-  m_Radius: 1.27999997
+  m_Radius: 2
 --- !u!114 &11401818
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -64,6 +65,20 @@ MonoBehaviour:
     poison: 25
     pain: 150
     taste: 0
+--- !u!114 &11437410
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 164966}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b1bc8e81687c04147ac1d5ae64423e8f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_effects:
+    name: 
+    boredom: 50
 --- !u!212 &21216386
 SpriteRenderer:
   m_ObjectHideFlags: 1

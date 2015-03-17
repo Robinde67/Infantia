@@ -4,6 +4,7 @@ using System.Collections;
 public class Health : MonoBehaviour {
 
     public float drain;
+	bool sleeping;
 
 	public float hunger;
 	public float sleepy;
@@ -42,30 +43,42 @@ public class Health : MonoBehaviour {
             real_drain = 0.1f * Time.fixedDeltaTime;
         }
         hunger -= real_drain;
+
         real_drain = (Time.fixedDeltaTime * drain) + (Time.fixedDeltaTime * ((float)person.social / (float)person.variety));
         if (real_drain <= 0)
         {
             real_drain = 0.1f * Time.fixedDeltaTime;;
         }
         boredom -= real_drain;
+
         real_drain = (Time.fixedDeltaTime * drain) + (Time.fixedDeltaTime * ((float)-person.proactive / (float)person.variety));
         if (real_drain <= 0)
         {
             real_drain = 0.1f * Time.fixedDeltaTime;;
         }
-        sleepy -= real_drain;
+		if (!sleeping)
+		{
+			sleepy -= real_drain;
+		}
+		else
+		{
+			sleepy += real_drain*10;
+		}
 
         if (poison < 0)
         {
             poison = 0;
-        } else if (poison > 0)
+        }
+		else if (poison > 0)
         {
             poison -= Time.fixedDeltaTime / 10;
         }
+
         if (injury < 0)
         {
             injury = 0;
-        } else if (injury > 0)
+        }
+		else if (injury > 0)
         {
             injury -= Time.fixedDeltaTime / 60;
         }
@@ -77,5 +90,19 @@ public class Health : MonoBehaviour {
 		hunger += effects.hunger;
 		poison += effects.poison;
 		memory.Eaten(effects);
+	}
+	public void Interact(Interactable.Effects effects)
+	{
+		//use iTween later
+		boredom += effects.boredom;
+		memory.Interacted(effects);
+	}
+	public void Sleep()
+	{
+		sleeping = true;
+	}
+	public void Wake_up()
+	{
+		sleeping = false;
 	}
 }
