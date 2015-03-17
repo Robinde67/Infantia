@@ -81,7 +81,7 @@ public class AI_Loop : MonoBehaviour
                 m_proposed_action.act = Activity.EAT;
                 for(int i = 0; i< m_memory.memories_edible.Count; i++)
                 {
-                    int val = (int)m_memory.memories_edible[i].GetValue() * 11 + m_personality.proactive;
+                    int val = (int)m_memory.memories_edible[i].GetValue(this.transform.position) * 11 + m_personality.proactive;
                     float closest = float.MaxValue;
                     int index = 0;
                     for(int j = 0; j < m_memory.memories_edible[i].positions.Count; j++)

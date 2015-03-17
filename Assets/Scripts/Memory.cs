@@ -10,9 +10,18 @@ public class Memory : MonoBehaviour {
         public List<Vector3> positions;
         public Edible.Effects effects;
         
-        public float GetValue(){
-			return (effects.hunger + effects.taste - effects.pain - effects.poison);
+        public float GetValue(Vector3 _Pos){
+			return (25 * (effects.hunger / 255) + 25 * (effects.taste / 255) - 50 * (effects.pain / 255) - 75 * (effects.poison / 255) + GetH(0, _Pos));
         }
+        
+		public float GetH(int i, Vector3 _target){
+			float dx = _target.x - positions[i].x;
+			float dy = _target.y - positions[i].y;
+			
+			float p = Mathf.Sqrt(dx * dx + dy * dy);
+			
+			return p * 10.0f;
+		}
 	}
 
 	public List<EdibleEffects> memories_edible = new List<EdibleEffects>();
@@ -72,7 +81,7 @@ public class Memory : MonoBehaviour {
         memories_edible.Add(ef);
 	}
 	
-	public Vector3 FindEdible(GameObject _go)
+	/*public Vector3 FindEdible(GameObject _go, Vector3 _Goal)
 	{
 		// Idea: Somehow turning the different values (pain, poison, tasty and hunger) into something akin to the FGH values.
 		// However, I wouldn't like to do this just out of the blue, besides I need sleep...
@@ -81,14 +90,14 @@ public class Memory : MonoBehaviour {
 		
 		for (int i = 0; i < memories_edible.Count; i++)
 		{
-			if (memories_edible[i].GetValue() > TempEffects.GetValue())
+			if (memories_edible[i].GetValue() > (TempEffects.GetValue() + TempEffects.GetH(0, _Goal)))
 			{
 				TempEffects = memories_edible[i];
 			}
 		}
 		
 		return TempEffects.positions[0];
-	}
+	}*/
 	public void Eaten(Edible.Effects ef)
 	{
 		for (int i = 0; i < memories_edible.Count; i++)
