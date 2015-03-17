@@ -42,7 +42,7 @@ CircleCollider2D:
   m_UsedByEffector: 0
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
-  m_Radius: 1.27999997
+  m_Radius: 2
 --- !u!114 &11456526
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -59,6 +59,7 @@ MonoBehaviour:
   m_amount: 0
   m_max_amount: 100
   m_effects:
+    name: 
     hunger: 5
     poison: 1
     pain: 1

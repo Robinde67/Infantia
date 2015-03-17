@@ -23,8 +23,28 @@ public class Memory : MonoBehaviour {
 			return p * 10.0f;
 		}
 	}
+	[System.Serializable]
+	public struct InteractableEffects
+	{
+		public List<Vector3> positions;
+		public Interactable.Effects effects;
+		
+		public float GetValue(){
+			return (effects.boredom);
+		}
+		
+		public float GetH(int i, Vector3 _target){
+			float dx = _target.x - positions[i].x;
+			float dy = _target.y - positions[i].y;
+			
+			float p = Mathf.Sqrt(dx * dx + dy * dy);
+			
+			return p * 10.0f;
+		}
+	}
 
 	public List<EdibleEffects> memories_edible = new List<EdibleEffects>();
+	public List<InteractableEffects> memories_interactables = new List<InteractableEffects>();
 	AI_astar astar;
 
 	// Use this for initialization
@@ -80,24 +100,43 @@ public class Memory : MonoBehaviour {
         ef.effects = _go.GetComponent<Edible>().Sense();
         memories_edible.Add(ef);
 	}
-	
-	/*public Vector3 FindEdible(GameObject _go, Vector3 _Goal)
+
+	public void OnFoundInteractable(GameObject _go) //Is it possible to send a struct directly in some way? // You need more than should be sent through a struct alone.
 	{
-		// Idea: Somehow turning the different values (pain, poison, tasty and hunger) into something akin to the FGH values.
-		// However, I wouldn't like to do this just out of the blue, besides I need sleep...
-		
-		EdibleEffects TempEffects = memories_edible[0];
-		
-		for (int i = 0; i < memories_edible.Count; i++)
+		if (!_go.GetComponent<SpriteRenderer>().enabled)
 		{
-			if (memories_edible[i].GetValue() > (TempEffects.GetValue() + TempEffects.GetH(0, _Goal)))
+			//Can't learn about something that isn't there
+			return;
+		}
+		for(int i = 0; i < memories_interactables.Count; i++)
+		{
+			if(memories_interactables[i].effects.name == _go.name)
 			{
-				TempEffects = memories_edible[i];
+				//Gonna need to change depending on how accurate the memory should be. Not enough time or brain-capacity to think now
+				//*For what I assume, we should only have this trigger when in an adjacent square, can that be fixed?
+				for (int j = 0; j < memories_interactables[i].positions.Count; j++)
+				{
+					if( memories_interactables[i].positions[j] == _go.transform.position)
+					{
+						//Do nothing if you already know the location and name of the item
+						return;
+					}
+				}
+				//Add position to memory if it is not already known
+				memories_interactables[i].positions.Add(_go.transform.position);
+				return;
 			}
 		}
-		
-		return TempEffects.positions[0];
-	}*/
+		//Create memory if it does not exist
+		InteractableEffects ef;
+		ef.effects.name = _go.name;
+		ef.positions = new List<Vector3>();
+		ef.positions.Add(_go.transform.position);
+		//Only for inital impression, increase with the actual values when interacted with at a later point
+		ef.effects = _go.GetComponent<Interactable>().Sense();
+		memories_interactables.Add(ef);
+	}
+
 	public void Eaten(Edible.Effects ef)
 	{
 		for (int i = 0; i < memories_edible.Count; i++)
@@ -111,6 +150,21 @@ public class Memory : MonoBehaviour {
 				temp.effects.poison += ef.poison;
 				temp.effects.taste += ef.taste;
 				memories_edible[i] = temp;
+				break;
+			}
+		}
+	}
+
+	public void Interacted(Interactable.Effects inf)
+	{
+		for (int i = 0; i < memories_interactables.Count; i++)
+		{
+			if(memories_interactables[i].effects.name == inf.name)
+			{
+				//iTween increase in this later too.
+				InteractableEffects temp = memories_interactables[i];
+				temp.effects.boredom = inf.boredom;
+				memories_interactables[i] = temp;
 				break;
 			}
 		}
