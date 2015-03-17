@@ -10,6 +10,7 @@ GameObject:
   - 4: {fileID: 404166}
   - 212: {fileID: 21283168}
   - 58: {fileID: 5836402}
+  - 114: {fileID: 11405276}
   m_Layer: 0
   m_Name: Tree
   m_TagString: Passable
@@ -25,7 +26,7 @@ Transform:
   m_GameObject: {fileID: 104128}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 5, y: 5, z: 5}
+  m_LocalScale: {x: 1, y: 1, z: 5}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -42,6 +43,17 @@ CircleCollider2D:
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
   m_Radius: .5
+--- !u!114 &11405276
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 104128}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f5dc8740f0c07684ab9034604a8aaae6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!212 &21283168
 SpriteRenderer:
   m_ObjectHideFlags: 1
@@ -64,9 +76,9 @@ SpriteRenderer:
   m_AutoUVMaxDistance: .5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingOrder: 0
-  m_Sprite: {fileID: 10913, guid: 0000000000000000f000000000000000, type: 0}
+  m_SortingLayerID: 714819271
+  m_SortingOrder: 20
+  m_Sprite: {fileID: 21300000, guid: 6dc4727e17aee0a438bf99437a952754, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
 --- !u!1001 &100100000
 Prefab:
