@@ -121,7 +121,7 @@ public class AI_astar : MonoBehaviour {
 		else
 		{
 			target = new Vector3(Random.Range(0, grid.x - 1), Random.Range(0, grid.y - 1));
-			Debug.LogError("Target did not change. Target set to " + target.x + "|" + target.y);
+			Debug.LogWarning("Target did not change. Target set to " + target.x + "|" + target.y);
 			//InitAStar();
 		}
 
@@ -194,7 +194,7 @@ public class AI_astar : MonoBehaviour {
 			{
 				if((Vector3)target == adjacentNodes[i].go.transform.position)
 				{
-					Debug.Log ("Target found, laps = " + p + "\nTarget pos: " + target.x + "|" + target.y);
+					//Debug.Log ("Target found, laps = " + p + "\nTarget pos: " + target.x + "|" + target.y);
 					pathNodes.Add(adjacentNodes[i]);
 					Node tempNode = adjacentNodes[i];
 					while(tempNode.parent != null)
