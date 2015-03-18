@@ -9,6 +9,7 @@ public class AI_Loop : MonoBehaviour
         STANDBY,
         MOVE,
         EAT,
+		TALK,
         INTERACT,
         SLEEP
     }
@@ -162,7 +163,13 @@ public class AI_Loop : MonoBehaviour
 						bored.weight = val;				
 					}
 				}
-				if(bored.weight > m_proposed_action.weight)
+				if(m_health.boredom < 100 + 5 * m_personality.social && m_current_action.act != Activity.TALK && m_memory.memories_infants.Count !=0)
+				{
+					m_proposed_action.act = Activity.TALK;
+					m_proposed_action.weight = 1000;
+					m_proposed_action.location = new Vector3((int)(m_grid.x / 2), (int)(m_grid.y / 2));
+				}
+				else if(bored.weight > m_proposed_action.weight)
 				{
 					m_proposed_action = bored;
 				}
@@ -206,6 +213,13 @@ public class AI_Loop : MonoBehaviour
     {
         m_astar.Recalculate(m_current_action.location);
         m_current_action.weight += 1;
+		if (m_current_action.act == Activity.TALK)
+		{
+			for(int i = 0; i < m_memory.memories_infants.Count; i++)
+			{
+				m_memory.memories_infants[i].GetComponent<AI_Loop>().Gather();
+			}
+		}
     }
 
 	public void ReachedDestination()
@@ -230,7 +244,18 @@ public class AI_Loop : MonoBehaviour
 		case Activity.SLEEP:
 			m_health.Sleep();
 			break;
+		case Activity.TALK:
+			m_current_action.act = Activity.STANDBY;
+			m_current_action.weight = 0;
+			break;
 		}
 	}
-
+	public void Gather()
+	{
+		m_current_action.act = Activity.TALK;
+		m_current_action.weight = 1000;
+		m_current_action.location = new Vector3(m_grid.x / 2, m_grid.y / 2);
+		m_astar.Recalculate(m_current_action.location);
+		m_current_action.weight += 1;
+	}
 }

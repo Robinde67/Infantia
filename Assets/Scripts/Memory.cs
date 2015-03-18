@@ -45,6 +45,7 @@ public class Memory : MonoBehaviour {
 
 	public List<EdibleEffects> memories_edible = new List<EdibleEffects>();
 	public List<InteractableEffects> memories_interactables = new List<InteractableEffects>();
+	public List<GameObject> memories_infants = new List<GameObject> ();
 	AI_astar astar;
 
 	// Use this for initialization

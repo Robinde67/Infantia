@@ -42,6 +42,15 @@ public class Object_Close : MonoBehaviour {
 					gom.OnFoundInteractable(grid.test[(int)pos.x][(int)pos.y].gameObject);
 				}
 			}
+			gameObject.GetComponent<Health>().boredom = 255;
+			for(int i = 0; i < gom.memories_infants.Count; i++)
+			{
+				if(gom.memories_infants[i] == other.gameObject)
+				{
+					return;
+				}
+			}
+			gom.memories_infants.Add(other.gameObject);
 		}
 	}
 }
