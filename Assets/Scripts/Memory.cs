@@ -60,6 +60,58 @@ public class Memory : MonoBehaviour {
 		astar.SetTarget(randomPos);
 		astar.InitAStar();
 	}
+
+	public void Die()
+	{
+		for (int i = 0; i < memories_edible.Count; i++) 
+		{
+			EdibleEffects ef = new EdibleEffects();
+			ef.effects.name = memories_edible[i].effects.name;
+			ef.effects.hunger = (short)Random.Range(0, memories_edible[i].effects.hunger / 2);
+			ef.effects.poison = (short)Random.Range(0, memories_edible[i].effects.poison / 2);
+			ef.effects.pain = (short)Random.Range(0, memories_edible[i].effects.pain / 2);
+			ef.effects.taste = (short)Random.Range(0, memories_edible[i].effects.taste / 2);
+			ef.positions = new List<Vector3>();
+			for(int j = 0; j < memories_edible[i].positions.Count && memories_edible[i].positions.Count != 1; j++)
+			{
+				if(Random.Range(0,1) == 1)
+				{
+					ef.positions.Add(memories_edible[i].positions[j]);
+				}
+			}
+			memories_edible[i] = ef;
+		}
+
+		for (int i = 0; i < memories_interactables.Count; i++) 
+		{
+			InteractableEffects ie = new InteractableEffects();
+			ie.effects.name = memories_interactables[i].effects.name;
+			ie.effects.boredom = (short)Random.Range(0, memories_interactables[i].effects.boredom);
+			ie.positions = new List<Vector3>();
+			for(int j = 0; j < memories_interactables[i].positions.Count && memories_interactables[i].positions.Count != 1; j++)
+			{
+				if(Random.Range(0,1) == 1)
+				{
+					ie.positions.Add(memories_interactables[i].positions[j]);
+				}
+			}
+			memories_interactables[i] = ie;
+		}
+		foreach(GameObject it in memories_infants)
+		{
+			Memory mem = it.GetComponent<Memory>();
+			for(int i = 0; i < mem.memories_infants.Count; i++)
+			{
+				if(mem.memories_infants[i] == gameObject)
+				{
+					mem.memories_infants.RemoveAt(i);
+					return;
+				}
+			}
+		}
+		memories_infants.Clear();
+
+	}
 	
 	// Update is called once per frame
 	void Update () {

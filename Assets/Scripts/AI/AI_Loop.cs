@@ -67,6 +67,16 @@ public class AI_Loop : MonoBehaviour
 
     void Decide()
     {
+
+		if (m_health.poison > 200 || m_health.hunger < 0)
+		{
+			m_health.Die();
+			return;
+		}
+		if (m_health.poison > 150)
+		{
+			return;
+		}
 		if (m_current_action.act == Activity.SLEEP)
 		{
 			//won't have time to add predators
@@ -251,11 +261,13 @@ public class AI_Loop : MonoBehaviour
 		}
 	}
 	public void Gather()
-	{
-		m_current_action.act = Activity.TALK;
-		m_current_action.weight = 1000;
-		m_current_action.location = new Vector3(m_grid.x / 2, m_grid.y / 2);
-		m_astar.Recalculate(m_current_action.location);
-		m_current_action.weight += 1;
+	{if (m_current_action.weight < 1000)
+		{
+			m_current_action.act = Activity.TALK;
+			m_current_action.weight = 1000;
+			m_current_action.location = new Vector3 (m_grid.x / 2, m_grid.y / 2);
+			m_astar.Recalculate (m_current_action.location);
+			m_current_action.weight += 1;
+		}
 	}
 }

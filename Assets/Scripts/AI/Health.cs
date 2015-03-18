@@ -105,4 +105,10 @@ public class Health : MonoBehaviour {
 	{
 		sleeping = false;
 	}
+	public void Die()
+	{
+		Start();
+		memory.Die();
+		//leave a tombstone or body at the place?
+	}
 }
