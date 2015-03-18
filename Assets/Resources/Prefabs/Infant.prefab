@@ -192,6 +192,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   memories_edible: []
   memories_interactables: []
+  memories_infants: []
 --- !u!114 &11447222
 MonoBehaviour:
   m_ObjectHideFlags: 1

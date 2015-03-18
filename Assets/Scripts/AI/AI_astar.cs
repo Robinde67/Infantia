@@ -125,6 +125,11 @@ public class AI_astar : MonoBehaviour {
 			//InitAStar();
 		}
 
+		if(grid.test[(int)target.x][(int)target.y].gameObject.tag == "Impassable")
+		{
+			target = new Vector3(Random.Range(0, grid.x - 1), Random.Range(0, grid.y - 1));
+		}
+
 		int p = 0;
 		while(openNodes.Count > 0 && p < maxLaps)
 		{
